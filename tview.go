@@ -3,40 +3,41 @@ package main
 import (
 	"fmt"
 
-	"github.com/gdamore/tcell/v2"
 	"github.com/rivo/tview"
 )
 
 func TUI() {
-	app := tview.NewApplication()
+	app := tview.NewApplication() // Can I remove letters and make them look like >
+
 	list := tview.NewList().
 		AddItem("Create Post", "", 'c', func() {
-			OpenForm(app)
-			defer app.Stop()
+			app.Stop()
+			OpenForm()
 		}).
 		AddItem("Search Post", "", 's', func() {
-			Search()
-			defer app.Stop()
+			app.Stop()
+			SearchForm('s')
 		}).
 		AddItem("Update Post", "", 'u', func() {
-			Update()
-			defer app.Stop()
+			app.Stop()
+			SearchForm('u')
 		}).
 		AddItem("Delete Post", "", 'd', func() {
-			Delete()
-			defer app.Stop()
+			app.Stop()
+			SearchForm('d')
 		}).
-		AddItem("Exit", "", 'e', func() { app.Stop() }).ShowSecondaryText(false)
+		AddItem("Exit", "", 'e', func() { app.Stop() }).ShowSecondaryText(false).SetWrapAround(true)
 
-	frame := tview.NewFrame(list).
-		AddText("What do you want to do?", true, tview.AlignLeft, tcell.ColorWhiteSmoke)
+	list.SetBorder(true).SetTitle("What do you want to do?")
 
-	if err := app.SetRoot(frame, true).SetFocus(list).Run(); err != nil {
+	if err := app.SetRoot(list, true).EnableMouse(true).Run(); err != nil { // Does Enable Mouse Work?
 		panic(err)
 	}
 }
 
-func OpenForm(app *tview.Application) {
+func OpenForm() {
+	app := tview.NewApplication()
+
 	title := tview.NewInputField().
 		SetLabel("Title: ").
 		SetFieldWidth(20)
@@ -55,11 +56,17 @@ func OpenForm(app *tview.Application) {
 			app.Stop()
 		})
 
-	layout := tview.NewFlex().
-		SetDirection(tview.FlexRow).
-		AddItem(form, 0, 1, true)
-
-	if err := app.SetRoot(layout, true).SetFocus(form).Run(); err != nil {
+	if err := app.SetRoot(form, true).EnableMouse(true).Run(); err != nil {
 		panic(err)
+	}
+}
+
+func SearchForm(r rune) {
+	app := tview.NewApplication()
+
+	app.Run()
+	switch r {
+	case 'u':
+	case 'd':
 	}
 }
