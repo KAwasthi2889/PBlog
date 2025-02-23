@@ -1,15 +1,18 @@
 package main
 
-import "fmt"
+func Create(post Post) {
 
-func Create(title, body string) {
-	fmt.Println("Create Post", title, body)
+}
+
+func Read() {
+	//Use GET to read data
 }
 
 func Update() {
-	fmt.Println("Update Post")
+	Read()
+	// Use PUT to set data
 }
 
 func Delete() {
-	fmt.Println("Delete Post")
+	// Implement Delete
 }

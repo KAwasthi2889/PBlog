@@ -37,6 +37,8 @@ func TUI() {
 }
 
 func Form(pages *tview.Pages) {
+	var newPost Post
+
 	title := tview.NewInputField().
 		SetLabel("Title: ").
 		SetFieldWidth(20)
@@ -44,12 +46,26 @@ func Form(pages *tview.Pages) {
 	body := tview.NewTextArea().
 		SetLabel("Body: ")
 
+	categories := []string{
+		"Technology", "Personal", "Sports", "Business", "Entertainment", "Fashion",
+	}
+
+	category := tview.NewDropDown()
+
+	for _, option := range categories {
+		category.AddOption(option, func() {
+			newPost.Category = option
+		})
+	}
+
 	form := tview.NewForm().
 		AddFormItem(title).
 		AddFormItem(body).
+		AddFormItem(category).
 		AddButton("Create", func() {
-			pages.SwitchToPage("list")
-			// Create()
+			newPost.Body = body.GetText()
+			newPost.Title = title.GetText()
+			Create(newPost)
 		}).
 		AddButton("Cancel", func() {
 			pages.SwitchToPage("list")
@@ -75,11 +91,7 @@ func Search_Id(pages *tview.Pages, r rune) {
 	form := tview.NewForm().
 		AddInputField("Id: ", "", 10, tview.InputFieldInteger, nil).
 		AddButton("Submit", func() {
-			switch r {
-			case 'r': // implement func
-			case 'u':
-			case 'd':
-			}
+			Select_Work(pages, r)
 		}).AddButton("Cancel", func() {
 		pages.SwitchToPage("list")
 	})
@@ -102,31 +114,52 @@ func Search_Title(pages *tview.Pages, r rune) {
 	list := tview.NewList()
 	list.SetWrapAround(true).
 		SetBorder(true).
-		SetTitle("POSTS:-")
+		SetTitle("POSTS")
 
 	update := func(text string) {
 		list.Clear()
 		for _, post := range posts {
 			if strings.Contains(strings.ToLower(post[0]), strings.ToLower(text)) {
 				list.AddItem(post[0], post[1], 0, func() {
-					pages.SwitchToPage("list")
-				}) // Change the function
+					Select_Work(pages, r)
+				})
 			}
 		}
 	}
 
-	search_bar := tview.NewForm().
-		AddInputField("Title: ", "", 20, nil, func(text string) {
-			update(text)
-		}).AddButton("Cancel", func() { // The button is not showing yet
-		pages.SwitchToPage("list")
-	})
+	search_bar := tview.NewFlex().
+		SetDirection(tview.FlexColumn).
+		AddItem(tview.NewInputField().
+			SetLabel("Title:  ").
+			SetChangedFunc(func(text string) {
+				update(text)
+			}),
+			0, 17, true).
+		AddItem(tview.NewBox(), 0, 1, false).
+		AddItem(tview.NewButton("Cancel").
+			SetSelectedFunc(func() {
+				pages.SwitchToPage("list")
+			}),
+			0, 2, true)
 
 	update("")
 
 	layout := tview.NewFlex().
 		SetDirection(tview.FlexRow).
-		AddItem(search_bar, 3, 1, true).
+		AddItem(search_bar, 1, 0, true).
 		AddItem(list, 0, 1, false)
+
 	pages.AddAndSwitchToPage("title", layout, true)
+}
+
+func Select_Work(pages *tview.Pages, r rune) {
+	switch r {
+	case 'r':
+		// ReadOnly(pages)
+	case 'u':
+		// ReadWrite(pages)
+	case 'd':
+		Delete()
+		pages.SwitchToPage("list")
+	}
 }
