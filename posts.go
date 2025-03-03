@@ -1,10 +1,8 @@
 package main
 
 type Post struct {
-	Id       int    `json:"Id"`
-	Title    string `json:"Title"`
-	Body     string `json:"Content"`
-	Category string `json:"Category"`
+	ID       int    `gorm:"primaryKey" json:"id"`
+	Title    string `json:"title"`
+	Body     string `json:"content"`
+	Category string `json:"category"`
 }
-
-var DB *grom.DB

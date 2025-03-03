@@ -1,7 +1,8 @@
 package main
 
 func Create(post Post) {
-
+	db.Create(post)
+	Modal("Post Created Succesfully!!!")
 }
 
 func Read() {
@@ -15,4 +16,8 @@ func Update() {
 
 func Delete() {
 	// Implement Delete
+}
+
+func Modal(message string) {
+
 }

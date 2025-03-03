@@ -6,22 +6,24 @@ import (
 	"github.com/rivo/tview"
 )
 
+var pages *tview.Pages
+
 func TUI() {
 	app := tview.NewApplication()
-	pages := tview.NewPages()
+	pages = tview.NewPages()
 
 	list := tview.NewList()
 	list.AddItem("Create Post", "", 0, func() {
-		Form(pages)
+		Form()
 	}).
 		AddItem("Read Post", "", 0, func() {
-			Search_choice(pages, 'r')
+			Search_choice('r')
 		}).
 		AddItem("Update Post", "", 0, func() {
-			Search_choice(pages, 'u')
+			Search_choice('u')
 		}).
 		AddItem("Delete Post", "", 0, func() {
-			Search_choice(pages, 'd')
+			Search_choice('d')
 		}).
 		AddItem("Exit", "", 0, func() { app.Stop() }).
 		ShowSecondaryText(false).
@@ -29,14 +31,14 @@ func TUI() {
 		SetBorder(true).
 		SetTitle("What do you want to do?")
 
-	pages.AddAndSwitchToPage("list", list, true)
+	pages.AddAndSwitchToPage("commands", list, true)
 
 	if err := app.SetRoot(pages, true).EnableMouse(true).Run(); err != nil {
 		panic(err)
 	}
 }
 
-func Form(pages *tview.Pages) {
+func Form() {
 	var newPost Post
 
 	title := tview.NewInputField().
@@ -63,42 +65,42 @@ func Form(pages *tview.Pages) {
 		AddFormItem(body).
 		AddFormItem(category).
 		AddButton("Create", func() {
-			newPost.Body = body.GetText()
 			newPost.Title = title.GetText()
+			newPost.Body = body.GetText()
 			Create(newPost)
 		}).
 		AddButton("Cancel", func() {
-			pages.SwitchToPage("list")
+			pages.SwitchToPage("commands")
 		})
-	pages.AddAndSwitchToPage("form", form, true)
+	pages.AddAndSwitchToPage("create", form, true)
 }
 
-func Search_choice(pages *tview.Pages, r rune) {
+func Search_choice(r rune) {
 	choice := tview.NewModal()
 	choice.SetText("How do you want to search the post?\n").
 		AddButtons([]string{"By Id (Exact Search)", "By Title (Similar Search)"}).
 		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
 			if buttonIndex == 0 {
-				Search_Id(pages, r)
+				Search_Id(r)
 			} else {
-				Search_Title(pages, r)
+				Search_Title(r)
 			}
 		})
 	pages.AddAndSwitchToPage("search", choice, true)
 }
 
-func Search_Id(pages *tview.Pages, r rune) {
+func Search_Id(r rune) {
 	form := tview.NewForm().
 		AddInputField("Id: ", "", 10, tview.InputFieldInteger, nil).
 		AddButton("Submit", func() {
-			Select_Work(pages, r)
+			Select_Work(r)
 		}).AddButton("Cancel", func() {
 		pages.SwitchToPage("list")
 	})
 	pages.AddAndSwitchToPage("id", form, true)
 }
 
-func Search_Title(pages *tview.Pages, r rune) {
+func Search_Title(r rune) {
 	posts := [][]string{
 		{"Golang Basics", "Text for Basics"},
 		{"Gin Framework", "Text for Framework"},
@@ -121,7 +123,7 @@ func Search_Title(pages *tview.Pages, r rune) {
 		for _, post := range posts {
 			if strings.Contains(strings.ToLower(post[0]), strings.ToLower(text)) {
 				list.AddItem(post[0], post[1], 0, func() {
-					Select_Work(pages, r)
+					Select_Work(r)
 				})
 			}
 		}
@@ -152,7 +154,7 @@ func Search_Title(pages *tview.Pages, r rune) {
 	pages.AddAndSwitchToPage("title", layout, true)
 }
 
-func Select_Work(pages *tview.Pages, r rune) {
+func Select_Work(r rune) {
 	switch r {
 	case 'r':
 		// ReadOnly(pages)
