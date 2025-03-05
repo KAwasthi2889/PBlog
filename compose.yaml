@@ -3,18 +3,19 @@ services:
     image: postgres:latest
     restart: always
     env_file:
-      - database.env
-    ports:
-      - "5432:5432"
+      - db/database.env
     volumes:
       - pgdata:/var/lib/postgresql/data
 
   app:
-    build: .
+    build: app
     depends_on:
       - db
     env_file:
-      - database.env
+      - db/database.env
+    stdin_open: true
+    tty: true
+    entrypoint: ["/app/main"]
 
 volumes:
   pgdata:
