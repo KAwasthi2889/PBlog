@@ -3,8 +3,9 @@ package main
 import "errors"
 
 func Create(post *Post) {
-	if post.ID == -1 {
+	if post.ID == 0 {
 		db.Create(post)
+		db.Last(post)
 		Notify(post, "Create")
 	} else {
 		db.Save(post)

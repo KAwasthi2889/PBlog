@@ -16,7 +16,7 @@ func TUI() {
 
 	list := tview.NewList()
 	list.AddItem("Create Post", "", 0, func() {
-		Form(-1, "", "")
+		Form(0, "", "")
 	}).
 		AddItem("Read Post", "", 0, func() {
 			Search_choice('r')
