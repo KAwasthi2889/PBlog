@@ -72,7 +72,7 @@ func Form(prev_id int, prev_title, prev_body string) {
 		AddButton("Create", func() {
 			newPost.Title = title.GetText()
 			newPost.Body = body.GetText()
-			Create(newPost)
+			Create(&newPost)
 		}).
 		AddButton("Cancel", func() {
 			pages.SwitchToPage("commands")
@@ -156,7 +156,7 @@ func Notify(post *Post, work string) {
 }
 
 func Reader(post *Post) {
-	title := "Title: " + post.Title + " ID: " + strconv.Itoa(post.ID)
+	title := "Title: " + post.Title + "#" + strconv.Itoa(post.ID)
 	body := "\n\n" + post.Body
 	content := title + body
 	form := tview.NewForm().

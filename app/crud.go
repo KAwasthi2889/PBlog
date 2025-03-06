@@ -1,23 +1,23 @@
 package main
 
-func Create(post Post) {
+import "errors"
+
+func Create(post *Post) {
 	if post.ID == -1 {
-		db.Create(&post)
-		Notify(&post, "Create")
+		db.Create(post)
+		Notify(post, "Create")
 	} else {
-		db.Save(&post)
-		Notify(&post, "Update")
+		db.Save(post)
+		Notify(post, "Update")
 	}
 }
 
 func Read(id int) (*Post, error) {
-	var count int64
-	err := db.Model(&Post{}).Where("id = ?", id).Count(&count).Error
-	if err != nil {
-		return nil, err
-	}
 	var post Post
 	db.First(&post, id)
+	if post.ID == 0 {
+		return nil, errors.New("ID Dosen't Exist")
+	}
 	return &post, nil
 }
 
