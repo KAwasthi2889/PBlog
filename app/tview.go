@@ -16,7 +16,7 @@ func TUI() {
 
 	list := tview.NewList()
 	list.AddItem("Create Post", "", 0, func() {
-		Form("", "")
+		Form(-1, "", "")
 	}).
 		AddItem("Read Post", "", 0, func() {
 			Search_choice('r')
@@ -40,8 +40,9 @@ func TUI() {
 	}
 }
 
-func Form(prev_title, prev_body string) {
+func Form(prev_id int, prev_title, prev_body string) {
 	var newPost Post
+	newPost.ID = prev_id
 
 	title := tview.NewInputField().
 		SetLabel("Title: ").
@@ -99,7 +100,7 @@ func Search_Id(r rune) {
 		AddInputField("Id: ", "", 10, tview.InputFieldInteger, func(text string) {
 			num, err := strconv.Atoi(text)
 			if err != nil {
-				Warn("Error getting ID") // Warns the string and gives option to exit or retry
+				Notify(nil, err.Error())
 			}
 			id = num
 		}).
@@ -117,9 +118,10 @@ func Select_Work(id int, r rune) {
 	case 'r':
 		post, err := Read(id)
 		if err != nil {
-			Warn("Invalid ID!!!")
+			Notify(nil, err.Error())
+		} else {
+			Reader(post)
 		}
-		Reader(post)
 	case 'u':
 		Update(id)
 	case 'd':
@@ -127,29 +129,36 @@ func Select_Work(id int, r rune) {
 	}
 }
 
-func Modal(work string) {
-	message := "Post " + work + "ed Succesfully!!!\n"
+func Notify(post *Post, work string) {
+	var message string
 	modal := tview.NewModal()
-	modal.SetText(message).
-		AddButtons([]string{"Return"}).
-		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
-			pages.SwitchToPage("commands")
-		})
+	if post != nil {
+		work += "d"
+		message = "Post " + work + " Successfully!!!\n"
+		modal.AddButtons([]string{"View " + work + " Post", "Return"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonIndex == 0 {
+					Reader(post)
+				} else {
+					pages.SwitchToPage("commands")
+				}
+			})
+	} else {
+		message = work
+		modal.AddButtons([]string{"Return"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				pages.SwitchToPage("commands")
+			})
+	}
+
+	modal.SetText(message)
 	pages.AddAndSwitchToPage("modal", modal, true)
 }
 
-func Warn(warning string) {
-	warn := tview.NewModal()
-	warn.SetText(warning).
-		AddButtons([]string{"Return"}).
-		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
-			pages.SwitchToPage("commands")
-		})
-	pages.AddAndSwitchToPage("warning", warn, true)
-}
-
-func Reader(post Post) {
-	content := "Title: " + post.Title + "#" + strconv.Itoa(post.ID) + "\n\n" + post.Body + "\n"
+func Reader(post *Post) {
+	title := "Title: " + post.Title + " ID: " + strconv.Itoa(post.ID)
+	body := "\n\n" + post.Body
+	content := title + body
 	form := tview.NewForm().
 		AddTextView("Content", content, 0, 0, false, true).
 		AddButton("Return", func() {

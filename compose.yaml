@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:latest
+    container_name: tui-db
     restart: always
     env_file:
       - db/database.env
@@ -9,6 +10,7 @@ services:
 
   app:
     build: app
+    container_name: tui-app
     depends_on:
       - db
     env_file:

@@ -1,28 +1,41 @@
 package main
 
 func Create(post Post) {
-	db.Save(&post)
-	Modal("Saved")
+	if post.ID == -1 {
+		db.Create(&post)
+		Notify(&post, "Create")
+	} else {
+		db.Save(&post)
+		Notify(&post, "Update")
+	}
 }
 
-func Read(id int) (Post, error) {
-	var post Post
-	result := db.First(&post, id)
-	if result.Error != nil {
-		return Post{}, result.Error
+func Read(id int) (*Post, error) {
+	var count int64
+	err := db.Model(&Post{}).Where("id = ?", id).Count(&count).Error
+	if err != nil {
+		return nil, err
 	}
-	return post, nil
+	var post Post
+	db.First(&post, id)
+	return &post, nil
 }
 
 func Update(id int) {
 	post, err := Read(id)
 	if err != nil {
-		Warn("Invalid ID!!!")
+		Notify(nil, err.Error())
+	} else {
+		Form(post.ID, post.Title, post.Body)
 	}
-	Form(post.Title, post.Body)
 }
 
 func Delete(id int) {
-	db.Delete(&Post{}, id)
-	Modal("Deleted")
+	post, err := Read(id)
+	if err != nil {
+		Notify(nil, err.Error())
+	} else {
+		db.Delete(&Post{}, id)
+		Notify(post, "Delete")
+	}
 }
