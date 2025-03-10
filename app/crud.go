@@ -4,9 +4,16 @@ import "errors"
 
 func Create(post *Post) {
 	if post.ID == 0 {
-		db.Create(post)
-		db.Last(post)
-		Notify(post, "Create")
+		var duplicate Post
+		db.First(&duplicate, "Title = ?", post.Title)
+		if duplicate.ID == 0 {
+			db.Create(post)
+			db.Last(post)
+			Notify(post, "Create")
+		} else {
+			Notify(nil, "Post with same title already exists, Please try again!!")
+		}
+
 	} else {
 		db.Save(post)
 		Notify(post, "Update")
@@ -39,4 +46,14 @@ func Delete(id int) {
 		db.Delete(&Post{}, id)
 		Notify(post, "Delete")
 	}
+}
+
+func Multiple(posts *[]Post, Title string, last_id int) int {
+	simmilar := "%" + Title + "%"
+	db.Where("title LIKE ? AND id > ?", simmilar, last_id).Limit(10).Find(posts)
+	last_id = 0
+	for _, post := range *posts {
+		last_id = post.ID
+	}
+	return last_id
 }

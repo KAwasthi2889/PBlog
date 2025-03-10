@@ -3,8 +3,6 @@ package main
 import (
 	"strconv"
 
-	// "strings"
-
 	"github.com/rivo/tview"
 )
 
@@ -15,19 +13,19 @@ func TUI() {
 	pages = tview.NewPages()
 
 	list := tview.NewList()
-	list.AddItem("Create Post", "", 0, func() {
+	list.AddItem("\nCreate Post", "", 0, func() {
 		Form(0, "", "")
 	}).
-		AddItem("Read Post", "", 0, func() {
+		AddItem("\n\nRead Post", "", 0, func() {
 			Search_choice('r')
 		}).
-		AddItem("Update Post", "", 0, func() {
+		AddItem("\n\nUpdate Post", "", 0, func() {
 			Search_choice('u')
 		}).
-		AddItem("Delete Post", "", 0, func() {
+		AddItem("\n\nDelete Post", "", 0, func() {
 			Search_choice('d')
 		}).
-		AddItem("Exit", "", 0, func() { app.Stop() }).
+		AddItem("\nExit", "", 0, func() { app.Stop() }).
 		ShowSecondaryText(false).
 		SetWrapAround(true).
 		SetBorder(true).
@@ -57,11 +55,12 @@ func Form(prev_id int, prev_title, prev_body string) {
 		"Technology", "Personal", "Sports", "Business", "Entertainment", "Fashion",
 	}
 
-	category := tview.NewDropDown()
+	category := tview.NewDropDown().
+		SetLabel("__Select Option__")
 
 	for _, option := range categories {
 		category.AddOption(option, func() {
-			newPost.Category = option
+			_, newPost.Category = category.GetCurrentOption()
 		})
 	}
 
@@ -88,7 +87,7 @@ func Search_choice(r rune) {
 			if buttonIndex == 0 {
 				Search_Id(r)
 			} else {
-				// Search_Title(r)
+				Search_Title(r)
 			}
 		})
 	pages.AddAndSwitchToPage("search", choice, true)
@@ -111,6 +110,60 @@ func Search_Id(r rune) {
 			pages.SwitchToPage("commands")
 		})
 	pages.AddAndSwitchToPage("id", form, true)
+}
+
+func Search_Title(r rune) {
+	posts := []Post{}
+	title := ""
+
+	list := tview.NewList()
+	list.SetWrapAround(true).
+		SetBorder(true).
+		SetTitle("POSTS")
+
+	updateList := func() {
+		list.Clear()
+		for _, post := range posts {
+			list.AddItem(post.Title, "", 0, func() {
+				Select_Work(post.ID, r)
+			})
+		}
+	}
+
+	last_id := Multiple(&posts, title, 0)
+	updateList()
+
+	search_bar := tview.NewFlex().
+		SetDirection(tview.FlexColumn).
+		AddItem(tview.NewInputField().
+			SetLabel("Title:  ").
+			SetChangedFunc(func(text string) {
+				title = text
+				last_id = Multiple(&posts, title, 0)
+				updateList()
+			}), 0, 17, true).
+		AddItem(tview.NewBox(), 0, 1, false).
+		AddItem(tview.NewButton("Cancel").
+			SetSelectedFunc(func() {
+				pages.SwitchToPage("commands")
+			}), 0, 2, true)
+
+	layout := tview.NewFlex().
+		SetDirection(tview.FlexRow).
+		AddItem(search_bar, 1, 0, true).
+		AddItem(list, 0, 1, true)
+
+	button := tview.NewButton("Next").
+		SetSelectedFunc(func() {
+			last_id = Multiple(&posts, title, last_id)
+			updateList()
+		})
+
+	if last_id != 0 {
+		layout.AddItem(button, 1, 0, true)
+	}
+
+	pages.AddAndSwitchToPage("title", layout, true)
 }
 
 func Select_Work(id int, r rune) {
@@ -166,56 +219,3 @@ func Reader(post *Post) {
 		})
 	pages.AddAndSwitchToPage("reader", form, true)
 }
-
-// func Search_Title(r rune) {
-// 	posts := [][]string{
-// 		{"Golang Basics", "Text for Basics"},
-// 		{"Gin Framework", "Text for Framework"},
-// 		{"Building REST APIs", "Text for API"},
-// 		{"Concurrency in Go", "Text for concurrency"},
-// 		{"Understanding Channels", "Text for Channels"},
-// 		{"Go Routines vs Threads", "Text for threads"},
-// 		{"Microservices with Go", "Text for Microservices"},
-// 		{"Database Handling in Go", "Text for database"},
-// 		{"Go Memory Management", "Text for memory management"},
-// 		} // Take the posts from web
-
-// 		list := tview.NewList()
-// 		list.SetWrapAround(true).
-// 		SetBorder(true).
-// 		SetTitle("POSTS")
-
-// 	update := func(text string) {
-// 		list.Clear()
-// 		for _, post := range posts {
-// 			if strings.Contains(strings.ToLower(post[0]), strings.ToLower(text)) {
-// 				list.AddItem(post[0], post[1], 0, func() {
-// 					Select_Work(r)
-// 				})
-// 			}
-// 		}
-// 	}
-// 		search_bar := tview.NewFlex().
-// 		SetDirection(tview.FlexColumn).
-// 		AddItem(tview.NewInputField().
-// 		SetLabel("Title:  ").
-// 		SetChangedFunc(func(text string) {
-// 			update(text)
-// 		}),
-// 		0, 17, true).
-// 		AddItem(tview.NewBox(), 0, 1, false).
-// 		AddItem(tview.NewButton("Cancel").
-// 		SetSelectedFunc(func() {
-// 			pages.SwitchToPage("list")
-// 		}),
-// 		0, 2, true)
-
-// 		update("")
-
-// 		layout := tview.NewFlex().
-// 		SetDirection(tview.FlexRow).
-// 		AddItem(search_bar, 1, 0, true).
-// 		AddItem(list, 0, 1, false)
-
-// 		pages.AddAndSwitchToPage("title", layout, true)
-// 		}
