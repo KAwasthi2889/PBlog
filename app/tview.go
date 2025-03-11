@@ -14,7 +14,7 @@ func TUI() {
 
 	list := tview.NewList()
 	list.
-		AddItem("\n▶ Create Post", "", 0, func() { Form(0, "", "") }).
+		AddItem("\n▶ Create Post", "", 0, func() { Form(0, "", "", "") }).
 		AddItem("\n▶ Read Post", "", 0, func() { Search_choice('r') }).
 		AddItem("\n▶ Update Post", "", 0, func() { Search_choice('u') }).
 		AddItem("\n▶ Delete Post", "", 0, func() { Search_choice('d') }).
@@ -32,9 +32,13 @@ func TUI() {
 	}
 }
 
-func Form(prev_id int, prev_title, prev_body string) {
+func Form(prev_id int, prev_category, prev_title, prev_body string) {
 	var newPost Post
-	newPost.ID = prev_id
+	work := " CREATE "
+	if prev_id != 0 {
+		newPost.ID = prev_id
+		work = " UPDATE "
+	}
 
 	title := tview.NewInputField().
 		SetLabel(" TITLE: ").
@@ -49,10 +53,13 @@ func Form(prev_id int, prev_title, prev_body string) {
 	category := tview.NewDropDown().
 		SetLabel(" CATEGORY: ").
 		SetFieldWidth(20)
-	for _, option := range categories {
+	for i, option := range categories {
 		category.AddOption(option, func() {
 			_, newPost.Category = category.GetCurrentOption()
 		})
+		if option == prev_category {
+			category.SetCurrentOption(i)
+		}
 	}
 
 	form := tview.NewForm()
@@ -60,14 +67,14 @@ func Form(prev_id int, prev_title, prev_body string) {
 		AddFormItem(title).
 		AddFormItem(body).
 		AddFormItem(category).
-		AddButton("✔ CREATE", func() {
+		AddButton("✔"+work, func() {
 			newPost.Title = title.GetText()
 			newPost.Body = body.GetText()
 			Create(&newPost)
 		}).
 		AddButton("✖ CANCEL", func() { pages.SwitchToPage("commands") }).
 		SetBorder(true).
-		SetTitle(" CREATE POST ").
+		SetTitle(work + "POST").
 		SetTitleAlign(tview.AlignCenter)
 
 	pages.AddAndSwitchToPage("create", form, true)

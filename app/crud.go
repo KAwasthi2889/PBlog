@@ -34,7 +34,8 @@ func Update(id int) {
 	if err != nil {
 		Notify(nil, err.Error())
 	} else {
-		Form(post.ID, post.Title, post.Body)
+
+		Form(post.ID, post.Category, post.Title, post.Body)
 	}
 }
 
