@@ -72,3 +72,5 @@ Pblog provides a simple and intuitive way to handle blog posts.
 - 🏷️ **User Preferences**: Posts will be recommended based on user preference tags.
 - 💰 **Payment Gateway**: Enable monetization options.
 - 🏗️ **PostgreSQL Deployment**: Deploy a PostgreSQL instance on a server for public access.
+
+Project inspiration: https://roadmap.sh/projects/blogging-platform-api
