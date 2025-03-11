@@ -4,16 +4,18 @@ Pblog is a **terminal-based user interface (TUI) blogging application** that all
 
 ## ✨ Features
 - ✅ **CRUD Operations**: Manage your blog posts seamlessly.
+![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/choice.png)
+![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/confirmation.png)
+![CRUD Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/CRUD.png)
+![Error-Handeling Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Error-Handeling.png)
+![Id Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Id-Search.png)
+![Post Content Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Content.png)
+![Post Creation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Creation.png)
+![Post Update Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Update.png)
+![Title Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Title-Search.png)
 - 🔍 **Similarity-Based Search**: Find posts based on content relevance.
 - 📌 **Paginated Fetching**: Limits the number of posts retrieved per query to optimize performance.
 - ⏭️ **Next Button for Pagination**: Fetches the next set of posts starting after the last retrieved post.
-
-## 🔮 Future Enhancements
-- 🎯 **Search Filtering**: Filter search results through categories.
-- 🔐 **Authentication**: Implement login and write permissions.
-- 🏷️ **User Preferences**: Posts will be recommended based on user preference tags.
-- 💰 **Payment Gateway**: Enable monetization options.
-- 🏗️ **PostgreSQL Deployment**: Deploy a PostgreSQL instance on a server for public access.
 
 ## 🛠️ Installation & Usage
 1. 📥 Clone the repository:
@@ -40,4 +42,9 @@ Pblog is a **terminal-based user interface (TUI) blogging application** that all
 
 ✅ And you are good to go! 😃
 
-📢 **Stay tuned for updates!**
+## 📢  Future Enhancements
+- 🎯 **Search Filtering**: Filter search results through categories.
+- 🔐 **Authentication**: Implement login and write permissions.
+- 🏷️ **User Preferences**: Posts will be recommended based on user preference tags.
+- 💰 **Payment Gateway**: Enable monetization options.
+- 🏗️ **PostgreSQL Deployment**: Deploy a PostgreSQL instance on a server for public access.
