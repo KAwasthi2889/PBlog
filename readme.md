@@ -1,27 +1,51 @@
-# 🚀 Pblog - A TUI Blogging App
+# 🚀 Pblog - A TUI Blogging App  
 
-Pblog is a **terminal-based user interface (TUI) blogging application** that allows users to **create, read, update, and delete posts** efficiently. It supports **similarity-based search** and **paginated fetching** to ensure smooth querying without overloading the database.
+Pblog is a **terminal-based user interface (TUI) blogging application** designed for seamless blog management. It enables users to **create, read, update, and delete posts** efficiently while supporting **similarity-based search** and **paginated fetching** to optimize performance and prevent database overload.  
 
-## ✨ Features
-- ✅ **CRUD Operations**: Manage your blog posts seamlessly.
-![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Choice.png)
-![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Confirmation.png)
-![CRUD Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/CRUD.png)
-![Error-Handeling Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Error-Handeling.png)
-![Id Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Id-Search.png)
-![Post Content Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Content.png)
-![Post Creation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Creation.png)
-![Post Update Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Update.png)
-![Title Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Title-Search.png)
-- 🔍 **Similarity-Based Search**: Find posts based on content relevance.
-- 📌 **Paginated Fetching**: Limits the number of posts retrieved per query to optimize performance.
-- ⏭️ **Next Button for Pagination**: Fetches the next set of posts starting after the last retrieved post.
+## ✨ Features  
 
-## 🛠️ Installation & Usage
-1. 📥 Clone the repository:
+### **CRUD Operations** – Manage Your Blog with Ease  
+Pblog provides a simple and intuitive way to handle blog posts.  
+
+- **Create a Post** 📝  
+  Effortlessly add new blog entries.  
+  ![Post Creation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Creation.png)  
+
+- **Read a Post** 📖  
+  View detailed content with ease.  
+  ![Post Content Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Content.png)  
+
+- **Update a Post** ✏️  
+  Automatically pre-fills previous content for quick editing.  
+  ![Post Update Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Update.png)  
+
+- **CRUD with Confirmation** ✅
+  A confirmation of work done.  
+  ![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Confirmation.png)  
+
+- **Error Handling** ⚠️  
+  Robust validation and user-friendly error messages.  
+  ![Error Handling Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Error-Handeling.png)  
+
+### 🔍 **Advanced Search Capabilities**  
+- **ID-Based Search** 🔢  
+  Retrieve posts using a unique identifier.  
+  ![ID Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Id-Search.png)  
+
+- **Similarity-Based Search** 🧐  
+  Find posts based on content relevance.  
+  ![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Choice.png)  
+
+- **Paginated Fetching** 📌  
+  Optimizes performance by fetching posts in batches.  
+  ![Title Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Title-Search.png)  
+
+## 🛠️ Installation & Usage  
+
+1. 📥 **Clone the Repository**  
    ```bash
    git clone https://github.com/KAwasthi2889/PBlog
-   ```
+  ```
 2. 📂 Navigate into the project directory and create a `db` directory:
    ```bash
    cd PBlog
