@@ -13,23 +13,17 @@ func TUI() {
 	pages = tview.NewPages()
 
 	list := tview.NewList()
-	list.AddItem("\nCreate Post", "", 0, func() {
-		Form(0, "", "")
-	}).
-		AddItem("\n\nRead Post", "", 0, func() {
-			Search_choice('r')
-		}).
-		AddItem("\n\nUpdate Post", "", 0, func() {
-			Search_choice('u')
-		}).
-		AddItem("\n\nDelete Post", "", 0, func() {
-			Search_choice('d')
-		}).
-		AddItem("\nExit", "", 0, func() { app.Stop() }).
+	list.
+		AddItem("\n▶ Create Post", "", 0, func() { Form(0, "", "") }).
+		AddItem("\n▶ Read Post", "", 0, func() { Search_choice('r') }).
+		AddItem("\n▶ Update Post", "", 0, func() { Search_choice('u') }).
+		AddItem("\n▶ Delete Post", "", 0, func() { Search_choice('d') }).
+		AddItem("\n❌ Exit", "", 0, func() { app.Stop() }).
 		ShowSecondaryText(false).
 		SetWrapAround(true).
 		SetBorder(true).
-		SetTitle("What do you want to do?")
+		SetTitle(" COMMANDS ").
+		SetTitleAlign(tview.AlignCenter)
 
 	pages.AddAndSwitchToPage("commands", list, true)
 
@@ -43,54 +37,83 @@ func Form(prev_id int, prev_title, prev_body string) {
 	newPost.ID = prev_id
 
 	title := tview.NewInputField().
-		SetLabel("Title: ").
+		SetLabel(" TITLE: ").
 		SetText(prev_title).
-		SetFieldWidth(20)
+		SetFieldWidth(40)
 
 	body := tview.NewTextArea().
 		SetText(prev_body, true).
-		SetLabel("Body: ")
+		SetLabel(" BODY: ")
 
-	categories := []string{
-		"Technology", "Personal", "Sports", "Business", "Entertainment", "Fashion",
-	}
-
+	categories := []string{"Technology", "Personal", "Sports", "Business", "Entertainment", "Fashion"}
 	category := tview.NewDropDown().
-		SetLabel("__Select Option__")
-
+		SetLabel(" CATEGORY: ").
+		SetFieldWidth(20)
 	for _, option := range categories {
 		category.AddOption(option, func() {
 			_, newPost.Category = category.GetCurrentOption()
 		})
 	}
 
-	form := tview.NewForm().
+	form := tview.NewForm()
+	form.
 		AddFormItem(title).
 		AddFormItem(body).
 		AddFormItem(category).
-		AddButton("Create", func() {
+		AddButton("✔ CREATE", func() {
 			newPost.Title = title.GetText()
 			newPost.Body = body.GetText()
 			Create(&newPost)
 		}).
-		AddButton("Cancel", func() {
-			pages.SwitchToPage("commands")
-		})
+		AddButton("✖ CANCEL", func() { pages.SwitchToPage("commands") }).
+		SetBorder(true).
+		SetTitle(" CREATE POST ").
+		SetTitleAlign(tview.AlignCenter)
+
 	pages.AddAndSwitchToPage("create", form, true)
 }
 
-func Search_choice(r rune) {
-	choice := tview.NewModal()
-	choice.SetText("How do you want to search the post?\n").
-		AddButtons([]string{"By Id (Exact Search)", "By Title (Similar Search)"}).
-		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
-			if buttonIndex == 0 {
-				Search_Id(r)
-			} else {
-				Search_Title(r)
-			}
-		})
-	pages.AddAndSwitchToPage("search", choice, true)
+func Notify(post *Post, work string) {
+	var message string
+	modal := tview.NewModal()
+
+	if post != nil {
+		work += "d"
+		message = "Post " + work + " successfully!!\n"
+		modal.AddButtons([]string{"📖 View " + work + " Post", "↩ Return"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				if buttonIndex == 0 {
+					Reader(post)
+				} else {
+					pages.SwitchToPage("commands")
+				}
+			})
+	} else {
+		message = work
+		modal.AddButtons([]string{"↩ Return"}).
+			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+				pages.SwitchToPage("commands")
+			})
+	}
+
+	modal.SetText(message).SetTextColor(tview.Styles.PrimaryTextColor)
+	pages.AddAndSwitchToPage("modal", modal, true)
+}
+
+func Reader(post *Post) {
+	title := "TITLE: " + post.Title + " || ID: " + strconv.Itoa(post.ID) + " || CATEGORY: " + post.Category
+	body := "\n\nBODY: " + post.Body
+	content := title + body
+
+	form := tview.NewForm()
+	form.
+		AddTextView("", content, 0, 0, false, true).
+		AddButton("↩ Return", func() { pages.SwitchToPage("commands") }).
+		SetBorder(true).
+		SetTitle(" POST DETAILS ").
+		SetTitleAlign(tview.AlignCenter)
+
+	pages.AddAndSwitchToPage("reader", form, true)
 }
 
 func Search_Id(r rune) {
@@ -103,12 +126,8 @@ func Search_Id(r rune) {
 			}
 			id = num
 		}).
-		AddButton("Submit", func() {
-			Select_Work(id, r)
-		}).
-		AddButton("Cancel", func() {
-			pages.SwitchToPage("commands")
-		})
+		AddButton("Submit", func() { Select_Work(id, r) }).
+		AddButton("Cancel", func() { pages.SwitchToPage("commands") })
 	pages.AddAndSwitchToPage("id", form, true)
 }
 
@@ -148,20 +167,20 @@ func Search_Title(r rune) {
 				pages.SwitchToPage("commands")
 			}), 0, 2, true)
 
-	layout := tview.NewFlex().
-		SetDirection(tview.FlexRow).
-		AddItem(search_bar, 1, 0, true).
-		AddItem(list, 0, 1, true)
-
 	button := tview.NewButton("Next").
 		SetSelectedFunc(func() {
 			last_id = Multiple(&posts, title, last_id)
+			if len(posts) == 0 {
+				last_id = Multiple(&posts, title, 0)
+			}
 			updateList()
 		})
 
-	if last_id != 0 {
-		layout.AddItem(button, 1, 0, true)
-	}
+	layout := tview.NewFlex().
+		SetDirection(tview.FlexRow).
+		AddItem(search_bar, 1, 0, true).
+		AddItem(list, 0, 1, true).
+		AddItem(button, 1, 0, true)
 
 	pages.AddAndSwitchToPage("title", layout, true)
 }
@@ -182,40 +201,16 @@ func Select_Work(id int, r rune) {
 	}
 }
 
-func Notify(post *Post, work string) {
-	var message string
-	modal := tview.NewModal()
-	if post != nil {
-		work += "d"
-		message = "Post " + work + " Successfully!!!\n"
-		modal.AddButtons([]string{"View " + work + " Post", "Return"}).
-			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
-				if buttonIndex == 0 {
-					Reader(post)
-				} else {
-					pages.SwitchToPage("commands")
-				}
-			})
-	} else {
-		message = work
-		modal.AddButtons([]string{"Return"}).
-			SetDoneFunc(func(buttonIndex int, buttonLabel string) {
-				pages.SwitchToPage("commands")
-			})
-	}
-
-	modal.SetText(message)
-	pages.AddAndSwitchToPage("modal", modal, true)
-}
-
-func Reader(post *Post) {
-	title := "Title: " + post.Title + "#" + strconv.Itoa(post.ID)
-	body := "\n\n" + post.Body
-	content := title + body
-	form := tview.NewForm().
-		AddTextView("Content", content, 0, 0, false, true).
-		AddButton("Return", func() {
-			pages.SwitchToPage("commands")
+func Search_choice(r rune) {
+	choice := tview.NewModal()
+	choice.SetText("How do you want to search the post?\n").
+		AddButtons([]string{"By Id (Exact Search)", "By Title (Similar Search)"}).
+		SetDoneFunc(func(buttonIndex int, buttonLabel string) {
+			if buttonIndex == 0 {
+				Search_Id(r)
+			} else {
+				Search_Title(r)
+			}
 		})
-	pages.AddAndSwitchToPage("reader", form, true)
+	pages.AddAndSwitchToPage("search", choice, true)
 }

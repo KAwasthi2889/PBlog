@@ -50,7 +50,7 @@ func Delete(id int) {
 
 func Multiple(posts *[]Post, Title string, last_id int) int {
 	simmilar := "%" + Title + "%"
-	db.Where("title LIKE ? AND id > ?", simmilar, last_id).Limit(10).Find(posts)
+	db.Where("title LIKE ? AND id > ?", simmilar, last_id).Limit(5).Find(posts)
 	last_id = 0
 	for _, post := range *posts {
 		last_id = post.ID
