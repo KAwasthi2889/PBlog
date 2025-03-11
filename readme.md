@@ -4,8 +4,8 @@ Pblog is a **terminal-based user interface (TUI) blogging application** that all
 
 ## ✨ Features
 - ✅ **CRUD Operations**: Manage your blog posts seamlessly.
-![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/choice.png)
-![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/confirmation.png)
+![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Choice.png)
+![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Confirmation.png)
 ![CRUD Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/CRUD.png)
 ![Error-Handeling Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Error-Handeling.png)
 ![Id Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Id-Search.png)
