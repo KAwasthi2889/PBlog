@@ -1,4 +1,4 @@
-# 🚀 Pblog - A TUI Blogging App  
+# 🚀 [Pblog](https://github.com/KAwasthi2889/PBlog) - A Dockerised TUI Blogging App  
 
 Pblog is a **terminal-based user interface (TUI) blogging application** designed for seamless blog management. It enables users to **create, read, update, and delete posts** efficiently while supporting **similarity-based search** and **paginated fetching** to optimize performance and prevent database overload.  
 
