@@ -108,7 +108,7 @@ func Notify(post *Post, work string) {
 }
 
 func Reader(post *Post) {
-	title := "TITLE: " + post.Title + " || ID: " + strconv.Itoa(post.ID) + " || CATEGORY: " + post.Category
+	title := "TITLE: " + post.Title + " #" + strconv.Itoa(post.ID) + "\nCATEGORY: " + post.Category
 	body := "\n\nBODY: " + post.Body
 	content := title + body
 
