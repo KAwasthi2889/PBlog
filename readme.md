@@ -9,36 +9,36 @@ Pblog provides a simple and intuitive way to handle blog posts.
 
 - **Create a Post** 📝  
   Effortlessly add new blog entries.  
-  ![Post Creation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Creation.png)  
+![Post Creation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Post-Creation.png)  
 
 - **Read a Post** 📖  
   View detailed content with ease.  
-  ![Post Content Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Content.png)  
+  ![Post Content Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Post-Content.png)  
 
 - **Update a Post** ✏️  
   Automatically pre-fills previous content for quick editing.  
-  ![Post Update Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Post-Update.png)  
+  ![Post Update Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Post-Update.png)  
 
-- **CRUD with Confirmation** ✅
+- **CRUD with Confirmation** ✅  
   A confirmation of work done.  
-  ![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Confirmation.png)  
+  ![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Confirmation.png)  
 
 - **Error Handling** ⚠️  
   Robust validation and user-friendly error messages.  
-  ![Error Handling Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Error-Handeling.png)  
+  ![Error Handling Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Error-Handeling.png)  
 
 ### 🔍 **Advanced Search Capabilities**  
 - **ID-Based Search** 🔢  
   Retrieve posts using a unique identifier.  
-  ![ID Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Id-Search.png)  
+  ![ID Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Id-Search.png)  
 
 - **Similarity-Based Search** 🧐  
   Find posts based on content relevance.  
-  ![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Choice.png)  
+  ![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Choice.png)  
 
 - **Paginated Fetching** 📌  
   Optimizes performance by fetching posts in batches.  
-  ![Title Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/PBlog/main/images/Title-Search.png)  
+  ![Title Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Title-Search.png)  
 
 ## 🛠️ Installation & Usage  
 
