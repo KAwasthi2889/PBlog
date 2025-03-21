@@ -45,7 +45,7 @@ Pblog provides a simple and intuitive way to handle blog posts.
 1. 📥 **Clone the Repository**  
    ```bash
    git clone https://github.com/KAwasthi2889/PBlog
-  ```
+   ```
 2. 📂 Navigate into the project directory and create a `db` directory:
    ```bash
    cd PBlog
