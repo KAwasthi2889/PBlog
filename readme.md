@@ -9,36 +9,36 @@ Pblog provides a simple and intuitive way to handle blog posts.
 
 - **Create a Post** 📝  
   Effortlessly add new blog entries.  
-![Post Creation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Post-Creation.png)  
+![Post Creation Screenshot](assets/Post-Creation.png)  
 
 - **Read a Post** 📖  
   View detailed content with ease.  
-  ![Post Content Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Post-Content.png)  
+  ![Post Content Screenshot](assets/Post-Content.png)  
 
 - **Update a Post** ✏️  
   Automatically pre-fills previous content for quick editing.  
-  ![Post Update Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Post-Update.png)  
+  ![Post Update Screenshot](assets/Post-Update.png)  
 
 - **CRUD with Confirmation** ✅  
   A confirmation of work done.  
-  ![Confirmation Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Confirmation.png)  
+  ![Confirmation Screenshot](assets/Confirmation.png)  
 
 - **Error Handling** ⚠️  
   Robust validation and user-friendly error messages.  
-  ![Error Handling Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Error-Handeling.png)  
+  ![Error Handling Screenshot](assets/Error-Handeling.png)  
 
 ### 🔍 **Advanced Search Capabilities**  
 - **ID-Based Search** 🔢  
   Retrieve posts using a unique identifier.  
-  ![ID Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Id-Search.png)  
+  ![ID Search Screenshot](assets/Id-Search.png)  
 
 - **Similarity-Based Search** 🧐  
   Find posts based on content relevance.  
-  ![Choice Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Choice.png)  
+  ![Choice Screenshot](assets/Choice.png)  
 
 - **Paginated Fetching** 📌  
   Optimizes performance by fetching posts in batches.  
-  ![Title Search Screenshot](https://raw.githubusercontent.com/KAwasthi2889/KAwasthi2889/main/PBlog/Title-Search.png)  
+  ![Title Search Screenshot](assets/Title-Search.png)  
 
 ## 🛠️ Installation & Usage  
 
